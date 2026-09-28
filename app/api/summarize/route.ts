@@ -20,7 +20,18 @@ export async function POST(req: Request) {
     },
     body: JSON.stringify({
       model: 'openai/gpt-3.5-turbo',
-      messages: [{ role: 'user', content: `Summarize this:\n\n${text}` }],
+      messages: [
+        {
+          role: 'system',
+          content:
+            'You are a concise text summarizer. ' +
+            'Summarize the user\'s text in 2-3 sentences (max 60 words). ' +
+            'Capture only the main idea. ' +
+            'Do not add commentary, preamble, or formatting like bullet points. ' +
+            'Respond with the summary only.',
+        },
+        { role: 'user', content: text },
+      ],
     }),
   })
 
